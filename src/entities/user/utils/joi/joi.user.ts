@@ -1,5 +1,5 @@
 import joi from 'joi';
-import joi_contact_details, { joi_contact_details_optional } from './joi.contact_details';
+import joi_contact_details, { joi_contact_details_optional } from '../../../contact_details/utils/joi/joi.contact_details';
 const joi_id = joi.string();
 const joi_first_name = joi.string()
 const joi_middle_name = joi.string()

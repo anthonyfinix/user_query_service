@@ -19,5 +19,5 @@ export const schema: Schema = new Schema({
     pincode: { type: Number, required: true, unique: true },
     coordinates: { type: Number, unique: true }
 })
-const ContactDetails: Model<ContactDetailsInterface> = model('ContactDetails', schema);
+const ContactDetails: Model<ContactDetailsInterface> = model('ContactDetail', schema);
 export default ContactDetails;

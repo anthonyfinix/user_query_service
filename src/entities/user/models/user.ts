@@ -1,7 +1,7 @@
-import config from '../config';
+import config from '../../../config';
 import mongoose, { Document, Model, model, Schema } from 'mongoose';
-import { ContactDetailsInterface } from './contact_details';
-import { IGeneric } from '../util/model/generic';
+import { ContactDetailsInterface } from '../../contact_details/models/contact_details';
+import { IGeneric } from '../../../util/model/generic';
 
 export interface UserNameInterface {
     first: string, middle: string, last: string
@@ -28,7 +28,7 @@ const schema: Schema = new Schema({
     },
     username: { type: String, required: true, unique: true },
     password: { type: String, required: true },
-    contact_details: { type: mongoose.Schema.Types.ObjectId, required: true },
+    contact_details: { type: mongoose.Schema.Types.ObjectId, ref:"ContactDetail",required: true },
     isVerified: {
         type: Boolean,
         required: true,

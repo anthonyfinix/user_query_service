@@ -1,8 +1,8 @@
 import { Request, Response as IResponse, NextFunction } from 'express';
-import getUser from '../../service/getUser';
-import { UserInterface } from '../../models/user';
-import { Response, IResponseParameters } from '../../util/response';
-import { InternalError } from '../../util/error';
+import getUser from '../service/getUser';
+import { UserInterface } from '../models/user';
+import { Response, IResponseParameters } from '../../../util/response';
+import { InternalError } from '../../../util/error';
 
 export default async (req: Request, res: IResponse, next: NextFunction) => {
     let response = await getUser(<UserInterface><Object>req.query);

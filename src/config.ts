@@ -7,6 +7,9 @@ export interface IConfig {
     mongooseOptions: {
         useNewUrlParser: boolean,
         useUnifiedTopology: boolean
+    },
+    express: {
+        default_url_encoding_extended: boolean
     }
 }
 class Configuration implements IConfig {
@@ -18,6 +21,9 @@ class Configuration implements IConfig {
     mongooseOptions = {
         useNewUrlParser: true,
         useUnifiedTopology: true
+    }
+    express = {
+        default_url_encoding_extended: true
     }
     setConfiguration(options: IConfig) {
         if (options.mongoURI) this.mongoURI = options.mongoURI;

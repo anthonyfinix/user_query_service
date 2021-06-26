@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from "express";
-import { BadRequest } from "../../../util/error/index";
-import { joi_id, joi_name, joi_username, joi_active, joi_role } from '../../../util/joi_schema/joi.user';
+import { BadRequest } from "../../../../util/error/index";
+import { joi_id, joi_name, joi_username, joi_active, joi_role } from '../../utils/joi/joi.user';
 export default async (req: Request, res: Response, next: NextFunction) => {
     let { id, name, username, active, role } = req.query;
     let errors = [];
