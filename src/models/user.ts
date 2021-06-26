@@ -1,4 +1,4 @@
-import config from '../util/config';
+import config from '../config';
 import mongoose, { Document, Model, model, Schema } from 'mongoose';
 import { ContactDetailsInterface } from './contact_details';
 import { IGeneric } from '../util/model/generic';
