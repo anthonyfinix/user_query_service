@@ -1,5 +1,5 @@
 import ContactDetails, { ContactDetailsInterface } from '../models/contact_details';
-import { ServiceResponseInterface } from '../../../models/service_response';
+import { ServiceResponseInterface } from '../../../models/serviceResponse.interface';
 export default async (newContactDetails: ContactDetailsInterface): Promise<ServiceResponseInterface> => {
     let contactDetails = new ContactDetails(newContactDetails);
     try {

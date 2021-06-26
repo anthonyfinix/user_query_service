@@ -1,2 +1,4 @@
 import express from 'express';
-export default () => express.json()
+export default () => {
+    return express.json()
+}

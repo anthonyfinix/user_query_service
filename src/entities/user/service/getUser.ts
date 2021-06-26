@@ -1,6 +1,6 @@
 import User from '../models/user';
 import { UserInterface } from '../models/user';
-import { ServiceResponseInterface } from '../../../models/service_response';
+import { ServiceResponseInterface } from '../../../models/serviceResponse.interface';
 import { FilterQuery } from 'mongoose';
 export interface IGetUserParameters extends UserInterface { }
 export default async ({ name }: IGetUserParameters): Promise<ServiceResponseInterface> => {
@@ -10,6 +10,6 @@ export default async ({ name }: IGetUserParameters): Promise<ServiceResponseInte
         let users = await User.find(query);
         return { message: "success", result: users }
     } catch (e) {
-        return { error:e };
+        return { error: <Error>e };
     }
 }

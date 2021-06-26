@@ -1,13 +1,13 @@
-export interface IErrorParameter {
+export interface IError {
     message?: string,
     status?: number,
-    details?: Array<string | {}>
+    details?: Array<unknown | Error>
 }
 export class GeneralError extends Error {
     message: string;
     status: number;
-    details: Array<string | {}>;
-    constructor({ message, status, details }: IErrorParameter) {
+    details: Array<unknown | {}>;
+    constructor({ message, status, details }: IError) {
         super();
         this.status = this.setStatus(status);
         this.message = this.setMessage(message);
@@ -27,7 +27,7 @@ export class GeneralError extends Error {
         if (this instanceof NotFound) return 'Not Found';
         return "there was an internal error"
     }
-    protected setDetails(details?: Array<string | {}>) {
+    protected setDetails(details?: Array<unknown | Error>):Array<unknown | Error> {
         if (details) return details;
         return []
     }

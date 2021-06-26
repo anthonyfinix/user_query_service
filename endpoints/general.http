@@ -6,5 +6,21 @@ POST http://localhost:3000/user
 Content-Type: application/json
 
 {
-    "hello":"hi"
+    "name":{
+        "first_name":"anthony",
+        "last_name":"finix"
+    },
+    "username":"anthonyfinix",
+    "password":"password",
+    "contact_details":{
+        "primary_number":9818031042,
+        "email":"anthonyfinix@gmail.com",
+        "address":"2190 sector 8 faridabad, haryana",
+        "city":"faridabad",
+        "state":"haryana",
+        "country":"india",
+        "pincode":121006
+    },
+    "active":true,
+    "role":"admin"
 }

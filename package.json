@@ -6,20 +6,22 @@
   "private": "true",
   "scripts": {
     "start:dev": "concurrently \"npm run tsc:watch\" \"npm run dev:watch\"",
-    "start:prod":"node index.js",
+    "start:prod": "node index.js",
     "tsc:watch": "tsc --watch",
     "dev:watch": "env-cmd nodemon index.js",
-    "tsc:build":"tsc --build"
+    "tsc:build": "tsc --build"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "bcrypt": "^5.0.1",
     "express": "^4.17.1",
     "joi": "^17.4.0",
     "mongoose": "^5.12.13"
   },
   "devDependencies": {
+    "@types/bcrypt": "^5.0.0",
     "@types/express": "^4.17.12",
     "@types/mongoose": "^5.11.97",
     "chain": "^0.1.3",

@@ -7,7 +7,7 @@ export interface UserNameInterface {
     first: string, middle: string, last: string
 }
 
-export interface UserInterface extends IGeneric,Document {
+export interface UserInterface extends IGeneric, Document {
     name: UserNameInterface,
     username: string,
     password: string,
@@ -28,13 +28,8 @@ const schema: Schema = new Schema({
     },
     username: { type: String, required: true, unique: true },
     password: { type: String, required: true },
-    contact_details: { type: mongoose.Schema.Types.ObjectId, ref:"ContactDetail",required: true },
-    isVerified: {
-        type: Boolean,
-        required: true,
-        default: config.default_user_verification_state,
-    },
-    role: { type: mongoose.Schema.Types.ObjectId, ref: "Role", required: true, default: config.default_user_role },
+    contact_details: { type: mongoose.Schema.Types.ObjectId, ref: "ContactDetail", required: true },
+    role: { type: String, required: true, default: config.default_user_role },
 })
 const User: Model<UserInterface> = model('User', schema);
 export default User;

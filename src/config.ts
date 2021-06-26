@@ -10,7 +10,9 @@ export interface IConfig {
     },
     express: {
         default_url_encoding_extended: boolean
-    }
+    },
+    passwordHashRound: number
+
 }
 class Configuration implements IConfig {
     env: string = "development";
@@ -30,6 +32,8 @@ class Configuration implements IConfig {
         if (options.port) this.port = options.port;
         if (options.env) this.env = options.env;
     }
+    passwordHashRound: number = 5
+
 }
 
 let configuration = new Configuration();
