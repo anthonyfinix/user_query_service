@@ -5,12 +5,15 @@ import createContactDetails from "../../contact_details/services/createContactDe
 import { ContactDetailsInterface } from "../../contact_details/models/contact_details";
 import hashPassword from "../utils/hashPassword";
 import configuration from "../../../config";
-export default async (newUser: UserInterface): Promise<ServiceResponseInterface> => {
-    newUser.password = await hashPassword(newUser.password,configuration.passwordHashRound);
+export interface createUserResponse extends ServiceResponseInterface {
+    result?: UserInterface
+}
+export default async (newUser: UserInterface): Promise<createUserResponse> => {
+    newUser.password = await hashPassword(newUser.password, configuration.passwordHashRound);
+    let session = await mongoose.connection.startSession();
     let user = new User(newUser);
-    let session = await mongoose.startSession();
-    session.startTransaction();
-    let contactDetailsCreationResponse = await createContactDetails(newUser.contact_details);
+    session.startTransaction()
+    let contactDetailsCreationResponse = await createContactDetails(newUser.contact_details, { session });
     if (contactDetailsCreationResponse.error) {
         await session.abortTransaction();
         session.endSession();
@@ -19,7 +22,7 @@ export default async (newUser: UserInterface): Promise<ServiceResponseInterface>
     let contactDetail = <ContactDetailsInterface>contactDetailsCreationResponse.result;
     user.contact_details = contactDetail._id;
     try {
-        let response = await user.save();
+        let response = await user.save({ session });
         await session.commitTransaction();
         session.endSession();
         return { result: response, message: "success" }

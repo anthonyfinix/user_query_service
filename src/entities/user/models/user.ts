@@ -8,6 +8,7 @@ export interface UserNameInterface {
 }
 
 export interface UserInterface extends IGeneric, Document {
+    id?:string,
     name: UserNameInterface,
     username: string,
     password: string,

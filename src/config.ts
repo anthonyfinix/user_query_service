@@ -6,7 +6,8 @@ export interface IConfig {
     mongoURI: string,
     mongooseOptions: {
         useNewUrlParser: boolean,
-        useUnifiedTopology: boolean
+        useUnifiedTopology: boolean,
+        useFindAndModify:boolean
     },
     express: {
         default_url_encoding_extended: boolean
@@ -22,7 +23,8 @@ class Configuration implements IConfig {
     mongoURI: string = "http://localhost:27017";
     mongooseOptions = {
         useNewUrlParser: true,
-        useUnifiedTopology: true
+        useUnifiedTopology: true,
+        useFindAndModify:false
     }
     express = {
         default_url_encoding_extended: true

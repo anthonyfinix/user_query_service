@@ -14,6 +14,7 @@ const joi_username = joi.string();
 const joi_active = joi.boolean();
 const joi_role = joi.string();
 const joi_user_optional = joi.object({
+    id:joi_id.optional(),
     name: joi_name.optional(),
     username: joi_username.optional(),
     password: joi_password.optional(),

@@ -19,6 +19,6 @@ import error_handler from '../../../routes/error_handler';
 const router: Router = express.Router();
 router.get('/', [get_validator], get);
 router.post('/', [urlEncoded({}),error_handler, expressJson(), post_validator], post);
-router.put('/', [urlEncoded, expressJson, update_validator], update);
+router.put('/', [urlEncoded({}), expressJson(), update_validator], update);
 router.delete('/', [remove_validator], remove);
 export default router;

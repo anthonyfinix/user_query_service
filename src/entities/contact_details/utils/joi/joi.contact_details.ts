@@ -16,7 +16,7 @@ const joi_contact_details_optional = joi.object({
 })
 const joi_contact_details = joi.object({
     primary_number: joi_primary_number.required(),
-    secondary_number: joi_secondary_number,
+    secondary_number: joi_secondary_number.required(),
     email: joi_email.required(),
     address: joi_address.required(),
     city: joi_city.required(),

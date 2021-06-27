@@ -1,7 +1,7 @@
 import { Request, Response as IResponse, NextFunction } from 'express';
 import getUser from '../service/getUser';
 import { UserInterface } from '../models/user';
-import { InternalError } from '../../../util/error';
+import { InternalError } from '../../../util/error/index';
 
 export default async (req: Request, res: IResponse, next: NextFunction) => {
     let response = await getUser(<UserInterface><unknown>req.query);
