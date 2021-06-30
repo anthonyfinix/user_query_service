@@ -5,13 +5,13 @@ Content-Type: application/json
     "id":"60d88e2d4c68fc47403d4656",
     "name":{
         "first_name":"anil",
-        "middle_name":"mathewsssss",
+        "middle_name":"mathews",
         "last_name":"joseph"
     },
     "username":"anilmathewjoseph",
     "password":"anilmathewjoseph@123",
     "contact_details":{
-        "primary_number":981800001,
+        "primary_number":9818031054,
         "secondary_number":9818031045,
         "email":"anilmathewjoseph@gmail.com",
         "address":"2190 sector 8 faridabad, haryana",
