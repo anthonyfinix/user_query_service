@@ -19,11 +19,11 @@ const joi_contact_details = joi.object({
     secondary_number: joi_secondary_number.required(),
     email: joi_email.required(),
     address: joi_address.required(),
-    city: joi_city.required(),
-    country: joi_country.required(),
-    state: joi_state.required(),
+    // city: joi_city.required(),
+    // country: joi_country.required(),
+    // state: joi_state.required(),
     // pincode: joi_pincode.required(),
-    coordinates: joi_coordinates,
+    // coordinates: joi_coordinates,
 })
 
 export {

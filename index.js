@@ -1,9 +1,8 @@
-const user_service = require('./dist').default;
-
-user_service({
-    mongoURI: 'mongodb+srv://anthonyfinix:anthonyfinix123@user.8kkfq.mongodb.net/user?retryWrites=true&w=majority'
+const user_query_service = require('./dist').default;
+const port = 3002
+user_query_service({
+    mongoURI: 'mongodb://localhost:27017/users',
+    port
 }).then(app => {
-    app.listen(3000, () => {
-        console.log('listening')
-    })
+    app.listen(port, () => console.log('listening port '+port))
 });
