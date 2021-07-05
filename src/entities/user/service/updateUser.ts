@@ -1,7 +1,8 @@
 import { connection, FilterQuery, UpdateQuery, QueryOptions, ClientSession } from "mongoose";
 import { ServiceResponseInterface } from "../../../models/serviceResponse.interface";
-import ContactDetails, { ContactDetailsInterface } from "../../contact_details/models/contact_details";
-import updateContactDetails from "../../contact_details/services/updateContactDetails";
+import City from "../../city/models/city";
+import Country from "../../country/models/country";
+import State from "../../state/models/state";
 import User, { UserInterface } from "../models/user";
 
 export default async (filter: UserInterface, userNewDetails: UserInterface, options?: QueryOptions): Promise<ServiceResponseInterface> => {
@@ -14,37 +15,31 @@ export default async (filter: UserInterface, userNewDetails: UserInterface, opti
     } else {
         session = <ClientSession>options.session;
     }
-    // get user contact details id
-    let currentUserDetails = await User.findOne(<FilterQuery<UserInterface>><unknown>filter);
-    if (!currentUserDetails) {
-        await session.abortTransaction()
-        session.endSession()
-        return { error: new Error('could not get the user details'), message: "unsuccessful" }
+    try {
+        let user = await User.findOne(<FilterQuery<UserInterface>><unknown>filter, { session });
+        if (!user) return { error: new Error("no user found"), message: "unsuccessful" }
+        let city = await City.findOneAndUpdate(
+            { name: userNewDetails.city }, {},
+            { upsert: true, session, new: true }
+        );
+        user.city = city._id;
+        let state = await State.findOneAndUpdate(
+            { name: userNewDetails.state }, {},
+            { upsert: true, session, new: true }
+        );
+        user.state = state._id;
+        let country = await Country.findOneAndUpdate(
+            { name: userNewDetails.country }, {},
+            { upsert: true, session, new: true }
+        );
+        user.state = country._id;
+        user.save({ session });
+        return { message: "success", result: user }
+    } catch (e) {
+        session.abortTransaction();
+        session.endSession();
+        return { error: e }
     }
-    try{
-        await ContactDetails.findOneAndUpdate({_id:currentUserDetails.contact_details},userNewDetails.contact_details)
-        userNewDetails.contact_details = currentUserDetails.contact_details;
-        try {
-            let newUser = await User.findOneAndUpdate(<FilterQuery<ContactDetailsInterface>><unknown>filter, <UpdateQuery<ContactDetailsInterface>><unknown>userNewDetails, { session })
-            if (!newUser) {
-                await session.abortTransaction()
-                session.endSession()
-                return { error: new Error("error while updating user details"), message: "unsuccessful" }
-            }
-            if (!options.session) {
-                await session.commitTransaction()
-                session.endSession()
-            }
-            return { result: newUser, message: "successful" }
-        } catch (e) {
-            await session.abortTransaction()
-            session.endSession()
-            return { error: new Error("error updating user details"), message: "unsuccessful" }
-        }
-    }catch(e){
-        await session.abortTransaction()
-        session.endSession()
-        return { error: e, message: "unsuccessful" }
-    }
+
 
 }

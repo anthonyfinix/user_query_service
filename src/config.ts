@@ -7,12 +7,13 @@ export interface IConfig {
     mongooseOptions: {
         useNewUrlParser: boolean,
         useUnifiedTopology: boolean,
-        useFindAndModify:boolean
+        useFindAndModify: boolean
     },
     express: {
         default_url_encoding_extended: boolean
     },
-    passwordHashRound: number
+    passwordHashRound: number,
+    amqplibURL: string
 
 }
 class Configuration implements IConfig {
@@ -24,17 +25,19 @@ class Configuration implements IConfig {
     mongooseOptions = {
         useNewUrlParser: true,
         useUnifiedTopology: true,
-        useFindAndModify:false
+        useFindAndModify: false
     }
+    passwordHashRound: number = 5;
+    amqplibURL: string = "amqps://localhost"
     express = {
         default_url_encoding_extended: true
     }
     setConfiguration(options: IConfig) {
+        if (options.amqplibURL) this.amqplibURL = options.amqplibURL
         if (options.mongoURI) this.mongoURI = options.mongoURI;
         if (options.port) this.port = options.port;
         if (options.env) this.env = options.env;
     }
-    passwordHashRound: number = 5
 
 }
 

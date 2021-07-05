@@ -1,13 +1,12 @@
 import { ServiceResponseInterface } from "../../../models/serviceResponse.interface";
 import User, { UserInterface } from "../models/user"
 import mongoose, { startSession } from 'mongoose';
-import createContactDetails from "../../contact_details/services/createContactDetails";
-import ContactDetails, { ContactDetailsInterface } from "../../contact_details/models/contact_details";
 import hashPassword from "../utils/hashPassword";
 import configuration from "../../../config";
 import City from "../../city/models/city";
 import State from "../../state/models/state";
 import Country from "../../country/models/country";
+import amqplibInstance, { amqplibQueues, userActions } from "../../../util/amqpConnect";
 export interface createUserResponse extends ServiceResponseInterface {
     result?: UserInterface
 }
@@ -18,27 +17,28 @@ export default async (newUser: UserInterface): Promise<createUserResponse> => {
     try {
 
         let city = await City.findOneAndUpdate(
-            { name: newUser.contact_details.city }, {},
-            { upsert:true, session, new: true }
+            { name: newUser.city }, {},
+            { upsert: true, session, new: true }
         )
         let state = await State.findOneAndUpdate(
-            { name: newUser.contact_details.state }, {},
+            { name: newUser.state }, {},
             { upsert: true, session, new: true }
         );
         let country = await Country.findOneAndUpdate(
-            { name: newUser.contact_details.country },{},
+            { name: newUser.country }, {},
             { upsert: true, session, new: true }
         );
-        let contactDetails = new ContactDetails({ ...newUser.contact_details });
-        contactDetails.city = city._id
-        contactDetails.state = state._id
-        contactDetails.country = country._id
-        let contactDetailsCreationResponse = await contactDetails.save({ session });
         let user = new User(newUser);
-        user.contact_details = contactDetailsCreationResponse._id;
+        user.city = city._id
+        user.state = state._id
+        user.country = country._id
         let userCreationResponse = await user.save({ session });
         await session.commitTransaction();
         session.endSession();
+        amqplibInstance.channel.sendToQueue(
+            amqplibQueues.USER,
+            Buffer.from(JSON.stringify({ type: userActions.USER_CREATION, payload: newUser }))
+        )
         return { result: userCreationResponse, message: "success" }
     } catch (e) {
         await session.abortTransaction();

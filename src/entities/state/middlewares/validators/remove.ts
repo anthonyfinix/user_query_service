@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import { BadRequest } from "../../../../util/error/index";
-import { joi_id } from '../../utils/joi/joi.user';
+import { joi_id } from '../../utils/joi/joi.state';
 export default async (req: Request, res: Response, next: NextFunction) => {
     let { id } = req.query;
     if (!id) return next(new BadRequest({ message: "id is required" }))
