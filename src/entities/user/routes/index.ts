@@ -14,11 +14,13 @@ import post from '../controllers/post'
 import update from '../controllers/update'
 import remove from '../controllers/remove'
 import error_handler from '../../../routes/error_handler';
+import multer from '../../../util/multer';
 
 
 const router: Router = express.Router();
 router.get('/', [get_validator], get);
-router.post('/', [urlEncoded({}),error_handler, expressJson(), post_validator], post);
+router.post('/', [urlEncoded({}), error_handler, expressJson(), multer().single('profile'), post_validator], post);
+// router.post('/', [urlEncoded({}), error_handler, expressJson(), post_validator], post);
 router.put('/', [urlEncoded({}), expressJson(), update_validator], update);
 router.delete('/', [remove_validator], remove);
 export default router;

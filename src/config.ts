@@ -1,3 +1,4 @@
+import path from 'path';
 export interface IConfig {
     env: string
     port: number,
@@ -13,7 +14,8 @@ export interface IConfig {
         default_url_encoding_extended: boolean
     },
     passwordHashRound: number,
-    amqplibURL: string
+    amqplibURL: string,
+    user_profile_path:string
 
 }
 class Configuration implements IConfig {
@@ -32,6 +34,7 @@ class Configuration implements IConfig {
     express = {
         default_url_encoding_extended: true
     }
+    user_profile_path:string = path.join(__dirname,'../public');
     setConfiguration(options: IConfig) {
         if (options.amqplibURL) this.amqplibURL = options.amqplibURL
         if (options.mongoURI) this.mongoURI = options.mongoURI;

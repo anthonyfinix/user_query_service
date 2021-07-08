@@ -13,18 +13,15 @@ const joi_state = joi.string();
 const joi_country = joi.string();
 const joi_pincode = joi.number();
 const joi_coordinates = joi.array().items(joi.number());
-const joi_name = joi.object({
-    first_name: joi_first_name.required(),
-    middle_name: joi_middle_name,
-    last_name: joi_last_name.required(),
-});
 const joi_password = joi.string();
 const joi_username = joi.string();
 const joi_active = joi.boolean();
 const joi_role = joi.string();
 const joi_user_optional = joi.object({
     id: joi_id.optional(),
-    name: joi_name.optional(),
+    first_name:joi_first_name.required(),
+    middle_name:joi_first_name,
+    last_name:joi_first_name.required(),
     username: joi_username.optional(),
     password: joi_password.optional(),
     active: joi_active.optional(),
@@ -40,7 +37,9 @@ const joi_user_optional = joi.object({
     coordinates: joi_coordinates.optional(),
 })
 const joi_user = joi.object({
-    name: joi_name.required(),
+    first_name:joi_first_name.required(),
+    middle_name:joi_first_name,
+    last_name:joi_first_name.required(),
     username: joi_username.required(),
     password: joi_password.required(),
     active: joi_active.required(),
@@ -65,7 +64,6 @@ export {
     joi_username,
     joi_active,
     joi_role,
-    joi_name,
     joi_primary_number,
     joi_secondary_number,
     joi_email,

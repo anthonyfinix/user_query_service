@@ -4,9 +4,9 @@ import { ServiceResponseInterface } from '../../../models/serviceResponse.interf
 import { FilterQuery, QueryOptions } from 'mongoose';
 export interface IGetUserParameters extends UserInterface { }
 export interface IGetUserResponse extends ServiceResponseInterface {
-    result?: [UserInterface]
+    result?: Array<UserInterface>
 }
-export default async (filter: IGetUserParameters, options?: QueryOptions): Promise<ServiceResponseInterface> => {
+export default async (filter: IGetUserParameters, options?: QueryOptions): Promise<IGetUserResponse> => {
     let query: FilterQuery<UserInterface> = <FilterQuery<UserInterface>><unknown>filter;
     try {
         let searchQuery = User.find(query)
